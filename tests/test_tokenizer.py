@@ -7,4 +7,4 @@ from dango import tokenize
     ('昨日映画お見ました', ['昨日', '映画', 'お', '見', 'まし', 'た'])
 ])
 def test_tokenize(phrase: str, expected: str):
-    assert expected == tokenize(phrase)
+    assert expected == [w.surface for w in tokenize(phrase)]
