@@ -3,7 +3,13 @@ from unittest.mock import Mock
 
 import pytest
 
-from dango.dango import Word
+from dango.word import Word
+
+
+def test_morphemes_property():
+    morphemes = [Mock()] * 3
+    word = Word(morphemes)
+    assert word.morphemes == morphemes
 
 
 @pytest.mark.parametrize(('surfaces', 'expected'), [
