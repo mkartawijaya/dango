@@ -77,10 +77,22 @@ def create_fsm():
             VERB_INFLECTION_STATE
         ],
         [
+            # --- transitions to aggregate inflected verbs ---
+            # start of a verb
             (None, ('動詞', '一般', '*', '*'), VERB_STATE),
+            # Some verbs (for example 見る) are detected as non independent even when standing alone,
+            # so we need to take this into account well for starting a new verb.
+            # However this wildcard state is overridden by a more specific state so that we don't accidentally
+            # break an inflected verb apart.
             (None, ('動詞', '非自立可能', '*', '*'), VERB_STATE),
+            # The inflected part of a verb is started by either an auxiliary verb, ...
             (VERB_STATE, ('助動詞', '*', '*', '*'), VERB_INFLECTION_STATE),
-            (VERB_INFLECTION_STATE, ('助動詞', '*', '*', '*'), VERB_INFLECTION_STATE)
+            # or a conjunctive particle, i.e. て or で.
+            (VERB_STATE, ('助詞', '接続助詞', '*', '*'), VERB_INFLECTION_STATE),
+            # continue aggregating any auxiliary verbs ...
+            (VERB_INFLECTION_STATE, ('助動詞', '*', '*', '*'), VERB_INFLECTION_STATE),
+            # and non independent verbs, e.g. the いる　of the continuous form
+            (VERB_INFLECTION_STATE, ('動詞', '非自立可能', '*', '*'), VERB_INFLECTION_STATE)
         ],
         UNSPECIFIED_WORD_STATE,
         UNSPECIFIED_WORD_STATE
