@@ -20,6 +20,8 @@ class WordState(object):
 UNSPECIFIED_WORD_STATE = WordState('UNSPECIFIED', start_new_word=True)
 VERB_STATE = WordState('VERB', start_new_word=True)
 VERB_INFLECTION_STATE = WordState('VERB_INFLECTION')
+ADJECTIVE_STATE = WordState('ADJECTIVE', start_new_word=True)
+ADJECTIVE_INFLECTION_STATE = WordState('ADJECTIVE_INFLECTION')
 
 
 def node_features(node: Morpheme):
@@ -74,10 +76,13 @@ def create_fsm():
         [
             UNSPECIFIED_WORD_STATE,
             VERB_STATE,
-            VERB_INFLECTION_STATE
+            VERB_INFLECTION_STATE,
+            ADJECTIVE_STATE,
+            ADJECTIVE_INFLECTION_STATE
         ],
         [
             # --- transitions to aggregate inflected verbs ---
+
             # start of a verb
             (None, ('動詞', '一般', '*', '*'), VERB_STATE),
             # Some verbs (for example 見る) are detected as non independent even when standing alone,
@@ -92,7 +97,23 @@ def create_fsm():
             # continue aggregating any auxiliary verbs ...
             (VERB_INFLECTION_STATE, ('助動詞', '*', '*', '*'), VERB_INFLECTION_STATE),
             # and non independent verbs, e.g. the いる　of the continuous form
-            (VERB_INFLECTION_STATE, ('動詞', '非自立可能', '*', '*'), VERB_INFLECTION_STATE)
+            (VERB_INFLECTION_STATE, ('動詞', '非自立可能', '*', '*'), VERB_INFLECTION_STATE),
+
+            # suffix for seeming/looks-like
+            (VERB_STATE, ('形状詞', '助動詞語幹', '*', '*'), VERB_INFLECTION_STATE),
+
+            # --- transitions to aggregate inflected adjectives ---
+
+            # start of an adjective
+            (None, ('形容詞', '一般', '*', '*'), ADJECTIVE_STATE),
+            # can be followed by negating suffix
+            (ADJECTIVE_STATE, ('形容詞', '非自立可能', '*', '*'), ADJECTIVE_INFLECTION_STATE),
+            # and/or suffix for the past-tense
+            (ADJECTIVE_STATE, ('助動詞', '*', '*', '*'), VERB_INFLECTION_STATE),
+            (ADJECTIVE_INFLECTION_STATE, ('助動詞', '*', '*', '*'), VERB_INFLECTION_STATE),
+
+            # suffix for seeming/looks-like
+            (ADJECTIVE_STATE, ('形状詞', '助動詞語幹', '*', '*'), ADJECTIVE_INFLECTION_STATE)
         ],
         UNSPECIFIED_WORD_STATE,
         UNSPECIFIED_WORD_STATE

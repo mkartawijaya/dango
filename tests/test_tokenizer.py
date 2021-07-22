@@ -24,7 +24,15 @@ from dango import tokenize
     ['この', '店', 'は', 'まだ', '開いてない'],
     ['この', '店', 'は', 'まだ', '開いていません'],
     ['この', '店', 'は', 'まだ', '開いてません'],
-    ['ラーメン', 'を', '作ってみた']
-], ids=lambda e: ' '.join(e))
+    ['ラーメン', 'を', '作ってみた'],
+    # inflected adjectives should be kept as one word as well
+    ['この', 'ビル', 'は', '高い'],
+    ['この', 'ビル', 'は', '高くない'],
+    ['この', 'ビル', 'は', '高かった'],
+    ['この', 'ビル', 'は', '高くなかった'],
+    # seems/looks-like suffixes should be kept with their verb/adjective
+    ['その', 'ケーキ', 'は', 'おいしそう'],
+    ['明日', '雨', 'が', '降りそう']
+], ids=lambda e: ''.join(e))
 def test_tokenize(expected: List[str]):
     assert expected == [w.surface for w in tokenize(''.join(expected))]
