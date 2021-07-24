@@ -20,3 +20,23 @@ def test_morphemes_property():
 def test_surface_property(surfaces: List[str], expected: str):
     word = Word([Mock(**{'surface.return_value': s}) for s in surfaces])
     assert word.surface == expected
+
+
+@pytest.mark.parametrize(('reading_forms', 'expected'), [
+    ([], ''),
+    (['ミル'], 'ミル'),
+    (['ミ', 'マシ', 'タ'], 'ミマシタ')
+])
+def test_surface_reading_property(reading_forms: List[str], expected: str):
+    word = Word([Mock(**{'reading_form.return_value': s}) for s in reading_forms])
+    assert word.surface_reading == expected
+
+
+@pytest.mark.parametrize(('dictionary_forms', 'expected'), [
+    ([], ''),
+    (['見る'], '見る'),
+    (['見る', 'ます', 'た'], '見る')
+])
+def test_dictionary_form_property(dictionary_forms: List[str], expected: str):
+    word = Word([Mock(**{'dictionary_form.return_value': s}) for s in dictionary_forms])
+    assert word.dictionary_form == expected
