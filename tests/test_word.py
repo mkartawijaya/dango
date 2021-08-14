@@ -24,8 +24,8 @@ def test_surface_property(surfaces: List[str], expected: str):
 
 @pytest.mark.parametrize(('reading_forms', 'expected'), [
     ([], ''),
-    (['ミル'], 'ミル'),
-    (['ミ', 'マシ', 'タ'], 'ミマシタ')
+    (['ミル'], 'みる'),
+    (['ミ', 'マシ', 'タ'], 'みました')
 ])
 def test_surface_reading_property(reading_forms: List[str], expected: str):
     word = Word([Mock(**{'reading_form.return_value': s}) for s in reading_forms])

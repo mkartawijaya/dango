@@ -2,6 +2,8 @@ from typing import List
 
 from sudachipy.morpheme import Morpheme
 
+from .util import katakana_to_hiragana
+
 
 class Word:
 
@@ -21,7 +23,7 @@ class Word:
     @property
     def surface_reading(self) -> str:
         """The kana reading of the surface representation."""
-        return ''.join(m.reading_form() for m in self._morphemes)
+        return katakana_to_hiragana(''.join(m.reading_form() for m in self._morphemes))
 
     @property
     def dictionary_form(self) -> str:

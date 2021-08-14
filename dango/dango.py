@@ -1,8 +1,9 @@
 from typing import List
 
-from dango.fsm import create_fsm
-from dango.word import Word
 from sudachipy import dictionary
+
+from .fsm import create_fsm
+from .word import Word
 
 
 class Tokenizer:
