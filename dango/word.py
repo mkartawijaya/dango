@@ -7,8 +7,9 @@ from .util import katakana_to_hiragana
 
 class Word:
 
-    def __init__(self, morphemes: List[Morpheme]):
+    def __init__(self, morphemes: List[Morpheme], dictionary_form_reading: str = None):
         self._morphemes = morphemes
+        self.dictionary_form_reading = dictionary_form_reading
 
     @property
     def morphemes(self) -> List[Morpheme]:
