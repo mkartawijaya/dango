@@ -24,6 +24,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
         ],
         python_requires='>=3.6',
         install_requires=[
+            'pygtrie ~= 2.4',
             'SudachiPy ~= 0.5.2',
             'SudachiDict-core >= 20210608',
         ],
