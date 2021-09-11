@@ -31,7 +31,7 @@ class Tokenizer:
 
     def tokenize(self, phrase: str) -> List[Word]:
         morphemes = self._tokenizer.tokenize(phrase)
-        return map(self.make_word, self._fsm.run(morphemes))
+        return [self.make_word(mm) for mm in self._fsm.run(morphemes)]
 
 
 TOKENIZER = Tokenizer()
