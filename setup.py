@@ -33,5 +33,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
                 'pytest ~= 6.2',
                 'coverage ~= 5.5',
             ]
+        },
+        entry_points={
+            'console_scripts': ['dango=dango.cli:main']
         }
     )
