@@ -5,6 +5,10 @@ import pytest
 from dango import tokenize
 
 
+def test_empty_phrase():
+    assert tokenize('') == [], 'an empty phrase contains no tokens'
+
+
 @pytest.mark.parametrize('expected', [
     # inflected verbs should be kept as one word
     ['昨日', '映画', 'を', '見ました'],
