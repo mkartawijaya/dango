@@ -1,2 +1,7 @@
 [run]
 source = dango
+
+[report]
+exclude_lines =
+    # skip any pass lines, useful for method stubs that won't be called themselves
+    pass
