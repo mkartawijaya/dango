@@ -29,9 +29,13 @@ with open("README.md", "r", encoding="utf-8") as fh:
             'SudachiDict-core >= 20210608',
         ],
         extras_require={
+            'dev': [
+                'mypy ~= 0.910',
+                'flake8 ~= 4.0'
+            ],
             'test': [
                 'pytest ~= 6.2',
-                'coverage ~= 5.5',
+                'coverage ~= 6.1',
             ]
         },
         entry_points={
