@@ -8,6 +8,7 @@ from .util import katakana_to_hiragana
 
 
 class PartOfSpeech(Enum):
+    """The part of speech tag of a word."""
 
     def _generate_next_value_(name, start, count, last_values):
         return name
@@ -72,8 +73,20 @@ POS_MAPPING = Trie([
 
 
 class Word:
+    """A part of a phrase after tokenization.
+
+    These are words only in the widest sense. Other than nouns, verbs, etc.
+    they might also be symbols or whitespace. One should examine the
+    part_of_speech property to detect what a word actually represents.
+    """
 
     def __init__(self, morphemes: List[Morpheme], dictionary_form_reading: str = None):
+        """Constructs a new word.
+
+        Args:
+            morphemes: The morphemes the word will be made up of.
+            dictionary_form_reading: The kana reading of the dictionary form.
+        """
         self._morphemes = morphemes
         self.dictionary_form_reading = dictionary_form_reading
 
@@ -99,4 +112,10 @@ class Word:
 
     @property
     def part_of_speech(self) -> PartOfSpeech:
+        """The part of speech tag of the word."""
+
+        # We use a trie to map the morpheme features to POS tags instead of
+        # a simple dict since there are feature tuples that can be mapped to
+        # more specific tags based on the longest matching prefix.
+
         return POS_MAPPING.longest_prefix(self.morphemes[0].part_of_speech()[:4]).value or PartOfSpeech.UNKNOWN

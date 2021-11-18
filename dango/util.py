@@ -33,9 +33,9 @@ KATAKANA_TO_HIRAGANA_TRANSLATION_TABLE = str.maketrans(KATAKANA, HIRAGANA)
 
 
 def katakana_to_hiragana(string: str) -> str:
-    """Replaces all katakana in a string with their hiragana counterparts.
+    """Returns a converted string where all katakana have been replaced with their hiragana counterparts.
 
     Args:
-        string: The string to convert
+        string: The string to convert.
     """
     return string.translate(KATAKANA_TO_HIRAGANA_TRANSLATION_TABLE)

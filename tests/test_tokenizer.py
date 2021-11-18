@@ -2,11 +2,11 @@ from typing import List
 
 import pytest
 
-from dango import tokenize
+import dango
 
 
 def test_empty_phrase():
-    assert tokenize('') == [], 'an empty phrase contains no tokens'
+    assert dango.tokenize('') == [], 'an empty phrase contains no tokens'
 
 
 @pytest.mark.parametrize('expected', [
@@ -39,7 +39,7 @@ def test_empty_phrase():
     ['明日', '雨', 'が', '降りそう']
 ], ids=lambda e: ''.join(e))
 def test_tokenize(expected: List[str]):
-    assert [w.surface for w in tokenize(''.join(expected))] == expected
+    assert [w.surface for w in dango.tokenize(''.join(expected))] == expected
 
 
 # Since extracting the reading of the dictionary form depends on knowledge
@@ -58,4 +58,4 @@ def test_tokenize(expected: List[str]):
     ('明日雨が降りそう', ['あす', 'あめ', 'が', 'ふる'])
 ], ids=lambda e: ''.join(e))
 def test_dictionary_form_reading(phrase: str, expected: List[str]):
-    assert [w.dictionary_form_reading for w in tokenize(phrase)] == expected
+    assert [w.dictionary_form_reading for w in dango.tokenize(phrase)] == expected
