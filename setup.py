@@ -30,6 +30,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
         ],
         extras_require={
             'dev': [
+                'build ~= 0.7',
+                'twine ~= 3.6',
                 'mypy ~= 0.910',
                 'flake8 ~= 4.0'
             ],
